@@ -9,6 +9,7 @@
 #define SCANNER_H_
 
 #include <string>
+#include <fstream>
 #include "Token.h"
 
 class Scanner {
@@ -17,7 +18,17 @@ public:
 	virtual ~Scanner();
 	Token* nextToken();
 private:
+	enum State {
+		ERR,
+		START,
+	};
+
 	std::string fFile;
+	std::ifstream* fInput;
+
+	bool isFinal(Scanner::State);
+	Scanner::State transition(Scanner::State, char c);
+	Token* makeToken(Scanner::State, std::string);
 };
 
 #endif /* SCANNER_H_ */

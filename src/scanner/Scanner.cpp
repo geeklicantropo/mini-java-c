@@ -13,21 +13,47 @@
 using namespace std;
 
 Scanner::Scanner(string file) : fFile(file) {
-	//TODO open file as character stream
+	this->fInput = new ifstream(this->fFile.c_str(), ifstream::in);
 }
 
 Scanner::~Scanner() {
+	this->fInput->close();
 }
 
 Token* Scanner::nextToken() {
-	//TODO Test
-	static bool flag = true;
-	if(flag) {
-		flag = false;
-		return TokenFactory::getLParen();
-	} else {
-		return TokenFactory::getEOF();
+	//TODO remember position in stream where we started (s)
+	State current = State::START;
+	State lastFinal;
+	Token* foundToken = NULL;
+	int c;
+	while(foundToken == NULL) {
+		c = fInput->get();
+		//TODO what happens if eof is reached?
+		State nextState = transition(current, c);
+		if(nextState == State::ERR) {
+			//TODO rewind position in stream to last final position (f)
+			//TODO extract text from stream in interval [s,f]
+			string text = "test";
+			foundToken = makeToken(lastFinal, text);
+		}
+		if(isFinal(nextState)) {
+			lastFinal = nextState;
+			//TODO remember position in stream
+		}
 	}
+	//invariant: foundToken != NULL
+	return foundToken;
+}
 
-	//TODO the automaton stuff happens here
+
+Token* Scanner::makeToken(Scanner::State state, string text) {
+	return NULL;
+}
+
+Scanner::State Scanner::transition(Scanner::State current, char c) {
+	return Scanner::State::ERR;
+}
+
+bool Scanner::isFinal(Scanner::State state) {
+	return true;
 }
