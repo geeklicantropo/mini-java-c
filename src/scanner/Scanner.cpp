@@ -22,7 +22,7 @@ Scanner::~Scanner() {
 
 Token* Scanner::nextToken() {
 	//TODO remember position in stream where we started (s)
-	State current = State::START;
+	State current = Scanner::START;
 	State lastFinal;
 	Token* foundToken = NULL;
 	int c;
@@ -30,7 +30,7 @@ Token* Scanner::nextToken() {
 		c = fInput->get();
 		//TODO what happens if eof is reached?
 		State nextState = transition(current, c);
-		if(nextState == State::ERR) {
+		if(nextState == Scanner::ERR) {
 			//TODO rewind position in stream to last final position (f)
 			//TODO extract text from stream in interval [s,f]
 			string text = "test";
@@ -51,7 +51,7 @@ Token* Scanner::makeToken(Scanner::State state, string text) {
 }
 
 Scanner::State Scanner::transition(Scanner::State current, char c) {
-	return Scanner::State::ERR;
+	return Scanner::ERR;
 }
 
 bool Scanner::isFinal(Scanner::State state) {
