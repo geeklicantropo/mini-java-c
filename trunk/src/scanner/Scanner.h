@@ -14,13 +14,14 @@
 
 class Scanner {
 public:
+
 	Scanner(std::string);
 	virtual ~Scanner();
 	Token* nextToken();
 private:
 	enum State {
-		ERR,
-		START,
+			ERR,
+			START,
 	};
 
 	std::string fFile;
