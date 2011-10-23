@@ -22,14 +22,21 @@ private:
 	enum State {
 			ERR,
 			START,
+			Q1,
+			Q2,
 	};
 
 	std::string fFile;
 	std::ifstream* fInput;
+	bool fEOF;
 
+	Token* handleEOF(Scanner::State, std::streampos, std::streampos);
+	char* extractText(std::ifstream* stream, std::streampos, std::streampos);
+
+	Scanner::State getStartState();
 	bool isFinal(Scanner::State);
-	Scanner::State transition(Scanner::State, char c);
-	Token* makeToken(Scanner::State, std::string);
+	Scanner::State transition(Scanner::State, char);
+	Token* makeToken(Scanner::State, char*);
 };
 
 #endif /* SCANNER_H_ */
