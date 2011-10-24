@@ -19,11 +19,51 @@ public:
 	virtual ~Scanner();
 	Token* nextToken();
 private:
-	enum State {
+	/*enum State {
 			ERR,
 			START,
 			Q1,
 			Q2,
+	};*/
+
+	enum State {
+		p10,
+		p11,
+		p30,
+		p31,
+		p32,
+		p33,
+		p35,
+		p17,
+		p34,
+		p16,
+		p19,
+		p36,
+		p18,
+		p13,
+		p12,
+		p15,
+		p14,
+		p0,
+		p5,
+		p8,
+		p7,
+		p2,
+		p1,
+		p4,
+		p3,
+		p21,
+		p9,
+		p22,
+		p20,
+		p26,
+		p25,
+		p24,
+		p23,
+		p29,
+		p28,
+		p27,
+		ERR
 	};
 
 	std::string fFile;
@@ -31,7 +71,7 @@ private:
 	bool fEOF;
 
 	Token* handleEOF(Scanner::State, std::streampos, std::streampos);
-	char* extractText(std::ifstream* stream, std::streampos, std::streampos);
+	char* extractText(std::ifstream* stream, std::streampos start, std::streampos end);
 
 	Scanner::State getStartState();
 	bool isFinal(Scanner::State);

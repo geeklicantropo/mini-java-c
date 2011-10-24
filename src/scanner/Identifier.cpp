@@ -7,11 +7,11 @@
 
 #include "Identifier.h"
 
-Identifier::Identifier(string s): Token(Token::T_IDENT) {
+Identifier::Identifier(char* s): Token(Token::T_IDENT) {
 	this->identifier = s;
 }
 
-string Identifier::getIdentifier() {
+char* Identifier::getIdentifier() {
 	return this->identifier;
 }
 

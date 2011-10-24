@@ -16,12 +16,12 @@ using namespace std;
 
 class Identifier: public Token {
 public:
-	Identifier(string s);
+	Identifier(char* s);
 	virtual ~Identifier();
-	string getIdentifier();
+	char* getIdentifier();
 
 private:
-	string identifier;
+	char* identifier;
 };
 
 #endif /* IDENTIFIER_H_ */
