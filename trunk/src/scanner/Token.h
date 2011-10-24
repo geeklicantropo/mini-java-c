@@ -37,9 +37,9 @@ public:
 		T_DIV,
 		T_MOD,
 		T_IDENT,
-		T_STRING,
 		T_NUMBER,
 		//
+		T_STRING,
 		T_CLASS,
 		T_PUBLIC,
 		T_STATIC,
@@ -58,7 +58,12 @@ public:
 		T_FALSE,
 		T_TRUE,
 		T_THIS,
-		T_NEW
+		T_NEW,
+		//
+		T_WHITESPACE,
+		T_COMMENT,
+		//
+		T_ERROR
 	};
 	Token(Token::Tag);
 	Tag getTag();
