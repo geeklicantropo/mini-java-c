@@ -235,6 +235,8 @@ Scanner::State Scanner::transition(Scanner::State current, char c) {
 			return Scanner::p19;
 		} else if(c == '6') {
 			return Scanner::p19;
+		} else if(c == '9') {
+			return Scanner::p19;
 		} else {
 			return Scanner::ERR;
 		}
