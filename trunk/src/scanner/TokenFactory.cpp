@@ -18,7 +18,6 @@ Token* TokenFactory::getEOF() {
 	if(t_eof == NULL) {
 		t_eof = new Token(Token::T_EOF);
 	}
-	cout << "eof" << endl;
 	return t_eof;
 }
 
@@ -27,7 +26,7 @@ Token* TokenFactory::getLParen() {
 	if(t_lparen == NULL) {
 		t_lparen = new Token(Token::T_LPAREN);
 	}
-	cout << "lparen" << endl;
+	cout << "(" << endl;
 	return t_lparen;
 }
 
@@ -36,7 +35,7 @@ Token* TokenFactory::getRParen() {
 	if(t_rparen == NULL) {
 		t_rparen = new Token(Token::T_RPAREN);
 	}
-	cout << "rparen" << endl;
+	cout << ")" << endl;
 	return t_rparen;
 }
 
@@ -45,7 +44,7 @@ Token* TokenFactory::getLCurlyParen() {
 	if(t_lcurlyparen == NULL) {
 		t_lcurlyparen = new Token(Token::T_LCURLYPAREN);
 	}
-	cout << "lcurlyparen" << endl;
+	cout << "{" << endl;
 	return t_lcurlyparen;
 }
 
@@ -54,7 +53,7 @@ Token* TokenFactory::getRCurlyParen() {
 	if(t_rcurlyparen == NULL) {
 		t_rcurlyparen = new Token(Token::T_RCURLYPAREN);
 	}
-	cout << "rcurlyparen" << endl;
+	cout << "}" << endl;
 	return t_rcurlyparen;
 }
 
@@ -63,7 +62,7 @@ Token* TokenFactory::getLSqParen() {
 	if(t_lsqparen == NULL) {
 		t_lsqparen = new Token(Token::T_LSQPAREN);
 	}
-	cout << "lsqparen" << endl;
+	cout << "[" << endl;
 	return t_lsqparen;
 }
 
@@ -72,7 +71,7 @@ Token* TokenFactory::getRSqParen() {
 	if(t_rsqparen == NULL) {
 		t_rsqparen = new Token(Token::T_RSQPAREN);
 	}
-	cout << "rsqparen" << endl;
+	cout << "]" << endl;
 	return t_rsqparen;
 }
 
@@ -81,7 +80,7 @@ Token* TokenFactory::getSemicolon() {
 	if(t_semicolon == NULL) {
 		t_semicolon = new Token(Token::T_SEMICOLON);
 	}
-	cout << "semicolon" << endl;
+	cout << ";" << endl;
 	return t_semicolon;
 }
 
@@ -90,7 +89,7 @@ Token* TokenFactory::getComma() {
 	if(t_comma == NULL) {
 		t_comma = new Token(Token::T_COMMA);
 	}
-	cout << "comma" << endl;
+	cout << "," << endl;
 	return t_comma;
 }
 
@@ -99,7 +98,7 @@ Token* TokenFactory::getPoint() {
 	if(t_point == NULL) {
 		t_point = new Token(Token::T_POINT);
 	}
-	cout << "point" << endl;
+	cout << "." << endl;
 	return t_point;
 }
 
@@ -108,7 +107,7 @@ Token* TokenFactory::getOr() {
 	if(t_or == NULL) {
 		t_or = new Token(Token::T_OR);
 	}
-	cout << "or" << endl;
+	cout << "||" << endl;
 	return t_or;
 }
 
@@ -117,7 +116,7 @@ Token* TokenFactory::getAnd() {
 	if(t_and == NULL) {
 		t_and = new Token(Token::T_AND);
 	}
-	cout << "and" << endl;
+	cout << "&&" << endl;
 	return t_and;
 }
 
@@ -126,7 +125,7 @@ Token* TokenFactory::getNot() {
 	if(t_not == NULL) {
 		t_not = new Token(Token::T_NOT);
 	}
-	cout << "not" << endl;
+	cout << "!" << endl;
 	return t_not;
 }
 
@@ -135,7 +134,7 @@ Token* TokenFactory::getEq() {
 	if(t_eq == NULL) {
 		t_eq = new Token(Token::T_EQ);
 	}
-	cout << "eq" << endl;
+	cout << "==" << endl;
 	return t_eq;
 }
 
@@ -144,7 +143,7 @@ Token* TokenFactory::getNe() {
 	if(t_ne == NULL) {
 		t_ne = new Token(Token::T_NE);
 	}
-	cout << "ne" << endl;
+	cout << "!=" << endl;
 	return t_ne;
 }
 
@@ -153,7 +152,7 @@ Token* TokenFactory::getLt() {
 	if(t_lt == NULL) {
 		t_lt = new Token(Token::T_LT);
 	}
-	cout << "lt" << endl;
+	cout << "<" << endl;
 	return t_lt;
 }
 
@@ -162,7 +161,7 @@ Token* TokenFactory::getLe() {
 	if(t_le == NULL) {
 		t_le = new Token(Token::T_LE);
 	}
-	cout << "le" << endl;
+	cout << "<=" << endl;
 	return t_le;
 }
 
@@ -171,7 +170,7 @@ Token* TokenFactory::getGt() {
 	if(t_gt == NULL) {
 		t_gt = new Token(Token::T_GT);
 	}
-	cout << "gt" << endl;
+	cout << ">" << endl;
 	return t_gt;
 }
 
@@ -180,7 +179,7 @@ Token* TokenFactory::getGe() {
 	if(t_ge == NULL) {
 		t_ge = new Token(Token::T_GE);
 	}
-	cout << "ge" << endl;
+	cout << ">=" << endl;
 	return t_ge;
 }
 
@@ -189,7 +188,7 @@ Token* TokenFactory::getAssig() {
 	if(t_assig == NULL) {
 		t_assig = new Token(Token::T_ASSIG);
 	}
-	cout << "assig" << endl;
+	cout << "=" << endl;
 	return t_assig;
 }
 
@@ -198,7 +197,7 @@ Token* TokenFactory::getPlus() {
 	if(t_plus == NULL) {
 		t_plus = new Token(Token::T_PLUS);
 	}
-	cout << "plus" << endl;
+	cout << "+" << endl;
 	return t_plus;
 }
 
@@ -207,7 +206,7 @@ Token* TokenFactory::getMinus() {
 	if(t_minus == NULL) {
 		t_minus = new Token(Token::T_MINUS);
 	}
-	cout << "minus" << endl;
+	cout << "-" << endl;
 	return t_minus;
 }
 
@@ -216,7 +215,7 @@ Token* TokenFactory::getTimes() {
 	if(t_times == NULL) {
 		t_times = new Token(Token::T_TIMES);
 	}
-	cout << "times" << endl;
+	cout << "*" << endl;
 	return t_times;
 }
 
@@ -225,7 +224,7 @@ Token* TokenFactory::getDiv() {
 	if(t_div == NULL) {
 		t_div = new Token(Token::T_DIV);
 	}
-	cout << "div" << endl;
+	cout << "/" << endl;
 	return t_div;
 }
 
@@ -234,17 +233,16 @@ Token* TokenFactory::getMod() {
 	if(t_mod == NULL) {
 		t_mod = new Token(Token::T_MOD);
 	}
-	cout << "mod" << endl;
+	cout << "%" << endl;
 	return t_mod;
 }
 
 Token* TokenFactory::getIdent(char* s) {
-	cout << "identifier " << s << endl;
 	return new Identifier(s);
 }
 
 Token* TokenFactory::getNumber(int i) {
-	cout << "number" << i << endl;
+	cout << "INTEGER_LITERAL " << i << endl;
 	return new Number(i);
 }
 
@@ -253,7 +251,7 @@ Token* TokenFactory::getString() {
 	if(t_string == NULL) {
 		t_string = new Token(Token::T_STRING);
 	}
-	cout << "string" << endl;
+	cout << "String" << endl;
 	return t_string;
 }
 
@@ -352,7 +350,7 @@ Token* TokenFactory::getSystem() {
 	if(t_system == NULL) {
 		t_system = new Token(Token::T_SYSTEM);
 	}
-	cout << "system" << endl;
+	cout << "System" << endl;
 	return t_system;
 }
 
@@ -433,7 +431,6 @@ Token* TokenFactory::getWhitespace() {
 	if(t_whitespace == NULL) {
 		t_whitespace = new Token(Token::T_WHITESPACE);
 	}
-	cout << "whitespace" << endl;
 	return t_whitespace;
 }
 
@@ -442,7 +439,6 @@ Token* TokenFactory::getComment() {
 	if(t_comment == NULL) {
 		t_comment = new Token(Token::T_COMMENT);
 	}
-	cout << "comment" << endl;
 	return t_comment;
 }
 

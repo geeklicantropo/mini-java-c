@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -93,9 +95,7 @@ Token* Scanner::makeToken(Scanner::State state, char* text) {
 	} else if(state == Scanner::p30) {
 		return TokenFactory::getGe();
 	} else if(state == Scanner::p19) {
-		int i = 0;
-		cout << text << endl;
-		return TokenFactory::getNumber(sscanf(text, "%d", &i)); // TODO: where to get correct number from?
+		return TokenFactory::getNumber(atoi(text)); // TODO: where to get correct number from?
 	} else if(state == Scanner::p10) {
 		return TokenFactory::getPlus();
 	} else if(state == Scanner::p2) {
