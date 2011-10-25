@@ -1,0 +1,75 @@
+public
+IDENT Fib
+{
+public
+static
+void
+IDENT main
+(
+IDENT String
+[
+]
+IDENT args
+)
+{
+IDENT Fib
+IDENT bif
+=
+new
+IDENT Fib
+(
+)
+;
+int
+IDENT res
+=
+IDENT bif
+.
+IDENT fib
+(
+INTEGER_LITERAL 12
+)
+;
+IDENT System
+.
+IDENT out
+.
+IDENT println
+(
+IDENT res
+)
+;
+}
+int
+IDENT fib
+(
+int
+IDENT n
+)
+{
+if
+(
+IDENT n
+<=
+INTEGER_LITERAL 1
+)
+return
+IDENT n
+;
+return
+IDENT fib
+(
+IDENT n
+-
+INTEGER_LITERAL 2
+)
++
+IDENT fib
+(
+IDENT n
+-
+INTEGER_LITERAL 1
+)
+;
+}
+}

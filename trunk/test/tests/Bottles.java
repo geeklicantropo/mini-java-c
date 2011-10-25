@@ -1,6 +1,6 @@
 class Bottles {
 	public static void main(String[] arg){
-		int i = 99;
+		int integral = 99;
 		while( i > 0 ){
 			/*i bottles of beer on the wall, take one down ...*/
 			System.out.println(-i*-1);
