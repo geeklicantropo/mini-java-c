@@ -70,13 +70,13 @@ private:
 	std::ifstream* fInput;
 	bool fEOF;
 
-	Token* handleEOF(Scanner::State, std::streampos, std::streampos);
+	Token* handleEOF(Scanner::State, std::streampos, std::streampos, unsigned int line);
 	char* extractText(std::ifstream* stream, std::streampos start, std::streampos end);
 
 	Scanner::State getStartState();
 	bool isFinal(Scanner::State);
 	Scanner::State transition(Scanner::State, char);
-	Token* makeToken(Scanner::State, char*);
+	Token* makeToken(Scanner::State, char*, unsigned int line);
 };
 
 #endif /* SCANNER_H_ */
