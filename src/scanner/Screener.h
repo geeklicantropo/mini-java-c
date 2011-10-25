@@ -11,6 +11,7 @@
 #include "Token.h"
 #include "Scanner.h"
 #include "Identifier.h"
+#include "Number.h"
 #include <vector>
 
 class Screener {

@@ -8,6 +8,9 @@
 #ifndef TOKEN_H_
 #define TOKEN_H_
 
+#include <iostream>
+#include <fstream>
+
 class Token {
 public:
 	enum Tag {
@@ -66,8 +69,10 @@ public:
 		T_ERROR
 	};
 	Token(Token::Tag);
-	Tag getTag();
+	Tag getTag() const;
 	virtual ~Token();
+
+    friend std::ostream& operator<<(std::ostream&, const Token&);
 private:
 	Tag fTag;
 };

@@ -13,7 +13,7 @@ IDENT arg
 )
 {
 int
-IDENT i
+IDENT integral
 =
 INTEGER_LITERAL 99
 ;
