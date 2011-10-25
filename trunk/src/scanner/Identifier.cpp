@@ -18,3 +18,9 @@ char* Identifier::getIdentifier() {
 Identifier::~Identifier() {
 }
 
+
+std::ostream& operator<<(std::ostream& aStream, Identifier& aIdent)
+{
+    return aStream << aIdent.getIdentifier();
+}
+

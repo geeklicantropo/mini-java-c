@@ -16,6 +16,7 @@ public:
 	virtual ~Number();
 	int getNumber();
 
+	friend std::ostream& operator<<(std::ostream&, Number&);
 private:
 	int number;
 };

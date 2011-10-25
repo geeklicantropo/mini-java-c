@@ -18,5 +18,9 @@ int Number::getNumber() {
 	return this->number;
 }
 
+std::ostream& operator<<(std::ostream& aStream, Number& aNumber)
+{
+    return aStream << aNumber.getNumber();
+}
 
 

@@ -38,9 +38,9 @@ Token* Screener::screenForKeywords(Identifier* ident) {
             return TokenFactory::getStatic();
         }
 
-        else if(!sContent.compare("out")){
+       /* else if(!sContent.compare("out")){
            	return TokenFactory::getOut();
-        }
+        }*/
 
         else if(!sContent.compare("else")){
            	return TokenFactory::getElse();
@@ -54,7 +54,7 @@ Token* Screener::screenForKeywords(Identifier* ident) {
            	return TokenFactory::getInt();
         }
 
-        else if(!sContent.compare("bool")){
+        else if(!sContent.compare("boolean")){
            	return TokenFactory::getBoolean();
         }
 
@@ -78,21 +78,21 @@ Token* Screener::screenForKeywords(Identifier* ident) {
             return TokenFactory::getClass();
         }
 
-        else if(!sContent.compare("System")){
+        /*else if(!sContent.compare("System")){
            	return TokenFactory::getSystem();
-        }
+        }*/
 
-        else if(!sContent.compare("String")){
+        /*else if(!sContent.compare("String")){
            	return TokenFactory::getString();
-        }
+        }*/
 
         else if(!sContent.compare("void")){
            	return TokenFactory::getVoid();
         }
 
-        else if(!sContent.compare("println")){
+       /* else if(!sContent.compare("println")){
            	return TokenFactory::getPrintln();
-        }
+        }*/
 
         else if(!sContent.compare("public")){
            	return TokenFactory::getPublic();
@@ -102,12 +102,11 @@ Token* Screener::screenForKeywords(Identifier* ident) {
            	return TokenFactory::getWhile();
         }
 
-        else if(!sContent.compare("main")){
+       /* else if(!sContent.compare("main")){
            	return TokenFactory::getMain();
-        }
+        }*/
 
-
-        cout << "IDENT " << ident->getIdentifier() << endl;
+      //  cout << "IDENT " << ident->getIdentifier() << endl;
         return ident;
 
 }

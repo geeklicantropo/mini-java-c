@@ -20,8 +20,11 @@ public:
 	virtual ~Identifier();
 	char* getIdentifier();
 
+    friend std::ostream& operator<<(std::ostream&, Identifier&);
 private:
 	char* identifier;
+
+
 };
 
 #endif /* IDENTIFIER_H_ */
