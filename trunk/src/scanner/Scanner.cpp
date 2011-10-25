@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
@@ -33,20 +34,44 @@ Token* Scanner::nextToken() {
 	streampos lastFinalPos = -1;
 	State lastFinal = Scanner::ERR;
 	Token* foundToken = NULL;
+
+	static unsigned int lineCounter=0;
+    static std::vector<streampos> newlineStack;
+
 	while(foundToken == NULL) {
 		int c = fInput->get(); //read next input char
 		if(c == -1) { //eof reached
 			//special handling, since once the stream reaches EOF
 			//seekg does not work anymore :(
-			foundToken = handleEOF(lastFinal, startPos, lastFinalPos);
+			foundToken = handleEOF(lastFinal, startPos, lastFinalPos, lineCounter);
 		} else {
 			current = transition(current, c);
+
+            ////
+            if(c=='\n') {
+                lineCounter++;
+                while(newlineStack.size()>0){
+                    if(newlineStack.back() < ((int) startPos)-1)
+                    {
+                        lineCounter--;
+                        newlineStack.pop_back();
+                    } else {
+                        lineCounter++;
+                        break;
+                    }
+                }
+                newlineStack.push_back(startPos);
+            }
+
+            ////
+
 			if(current == Scanner::ERR) {
 				if(lastFinal == Scanner::ERR) {
 					throw "Scanner error"; //we did not find a final state
 				}
+
 				char* text = extractText(fInput, startPos, lastFinalPos);
-				foundToken = makeToken(lastFinal, text);
+				foundToken = makeToken(lastFinal, text, lineCounter);
 				//restore last final pos position in stream, scanning
 				//starts from here when nextToken is called again
 				fInput->seekg(lastFinalPos);
@@ -70,7 +95,7 @@ char* Scanner::extractText(ifstream* stream, streampos start, streampos end) {
 	return text;
 }
 
-Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, streampos lastFinal) {
+Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, streampos lastFinal, unsigned int lineCounter) {
 	fEOF = true;
 	ifstream stream(this->fFile.c_str(), ifstream::in);
 	streamsize length;
@@ -81,13 +106,13 @@ Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, str
 		return TokenFactory::getEOF(); //we are now at eof
 	} else if(lastFinal == length) { //we reached a final state with the last char in input
 		char* text = extractText(&stream, startPos, lastFinal);
-		return makeToken(lastFinalState, text); //return appropriate token
+		return makeToken(lastFinalState, text, lineCounter); //return appropriate token
  	} else { //there was input in the file, but we did not reach a final state
  		throw "Scanner error: premature end of file"; //this is an error
  	}
 }
 
-Token* Scanner::makeToken(Scanner::State state, char* text) {
+Token* Scanner::makeToken(Scanner::State state, char* text, unsigned int line) {
 	assert(isFinal(state));
 
 	switch(state){
