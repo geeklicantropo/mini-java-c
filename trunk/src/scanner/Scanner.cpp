@@ -90,67 +90,40 @@ Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, str
 Token* Scanner::makeToken(Scanner::State state, char* text) {
 	assert(isFinal(state));
 
-	if(state == Scanner::p20) {
-		return TokenFactory::getGt();
-	} else if(state == Scanner::p30) {
-		return TokenFactory::getGe();
-	} else if(state == Scanner::p19) {
-		return TokenFactory::getNumber(atoi(text)); // TODO: where to get correct number from?
-	} else if(state == Scanner::p10) {
-		return TokenFactory::getPlus();
-	} else if(state == Scanner::p2) {
-		return TokenFactory::getWhitespace();
-	} else if(state == Scanner::p24) {
-		return TokenFactory::getRSqParen();
-	} else if(state == Scanner::p14) {
-		return TokenFactory::getPoint();
-	} else if(state == Scanner::p22) {
-		return TokenFactory::getLt();
-	} else if(state == Scanner::p32) {
-		return TokenFactory::getLe();
-	} else if(state == Scanner::p1) {
-		return TokenFactory::getIdent(text); // TODO: where to get correct identifier from?
-	} else if(state == Scanner::p7) {
-		return TokenFactory::getMod();
-	} else if(state == Scanner::p11) {
-		return TokenFactory::getTimes();
-	} else if(state == Scanner::p23) {
-		return TokenFactory::getSemicolon();
-	} else if(state == Scanner::p15) {
-		return TokenFactory::getDiv();
-	} else if(state == Scanner::p35) {
-		return TokenFactory::getComment();
-	} else if(state == Scanner::p25) {
-		return TokenFactory::getLSqParen();
-	} else if(state == Scanner::p9) {
-		return TokenFactory::getNot();
-	} else if(state == Scanner::p28) {
-		return TokenFactory::getNe();
-	} else if(state == Scanner::p12) {
-		return TokenFactory::getRParen();
-	} else if(state == Scanner::p16) {
-		return TokenFactory::getLParen();
-	} else if(state == Scanner::p21) {
-		return TokenFactory::getAssig();
-	} else if(state == Scanner::p31) {
-		return TokenFactory::getEq();
-	} else if(state == Scanner::p3) {
-		return TokenFactory::getLCurlyParen();
-	} else if(state == Scanner::p5) {
-		return TokenFactory::getRCurlyParen();
-	} else if(state == Scanner::p18) {
-		return TokenFactory::getComma();
-	} else if(state == Scanner::p13) {
-		return TokenFactory::getMinus();
-	} else if(state == Scanner::p17) {
-		return TokenFactory::getNumber(0);
-	} else if(state == Scanner::p27) {
-		return TokenFactory::getAnd();
-	} else if(state == Scanner::p26) {
-		return TokenFactory::getOr();
-	} else {
-		return TokenFactory::getError();
-	}
+	switch(state){
+	case Scanner::p20: return TokenFactory::getGt();
+	case Scanner::p30: return TokenFactory::getGe();
+	case Scanner::p19: return TokenFactory::getNumber(atoi(text));
+	case Scanner::p10: return TokenFactory::getPlus();
+	case Scanner::p2: return TokenFactory::getWhitespace();
+	case Scanner::p24: return TokenFactory::getRSqParen();
+	case Scanner::p14: return TokenFactory::getPoint();
+	case Scanner::p22: return TokenFactory::getLt();
+	case Scanner::p32: return TokenFactory::getLe();
+	case Scanner::p1: return TokenFactory::getIdent(text);
+	case Scanner::p7: return TokenFactory::getMod();
+	case Scanner::p11: return TokenFactory::getTimes();
+	case Scanner::p23: return TokenFactory::getSemicolon();
+	case Scanner::p15: return TokenFactory::getDiv();
+	case Scanner::p35: return TokenFactory::getComment();
+	case Scanner::p25: return TokenFactory::getLSqParen();
+	case Scanner::p9: return TokenFactory::getNot();
+	case Scanner::p28: return TokenFactory::getNe();
+	case Scanner::p12: return TokenFactory::getRParen();
+	case Scanner::p16: return TokenFactory::getLParen();
+	case Scanner::p21: return TokenFactory::getAssig();
+	case Scanner::p31: return TokenFactory::getEq();
+	case Scanner::p3: return TokenFactory::getLCurlyParen();
+	case Scanner::p5: return TokenFactory::getRCurlyParen();
+	case Scanner::p18: return TokenFactory::getComma();
+	case Scanner::p13: return TokenFactory::getMinus();
+	case Scanner::p17: return TokenFactory::getNumber(0);
+	case Scanner::p27: return TokenFactory::getAnd();
+	case Scanner::p26: return TokenFactory::getOr();
+	default: return TokenFactory::getError();
+	};
+	return TokenFactory::getError();
+
 	//TEST
 	/*cout << "text=" << text << endl;
 	if(state == Scanner::Q1) {
@@ -186,456 +159,299 @@ Scanner::State Scanner::transition(Scanner::State current, char c) {
 			return Scanner::ERR;
 		}
 	}*/
-	if(current == Scanner::p10) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p11) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p30) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p31) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p32) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p33) {
-		if(c == '*') {
-			return Scanner::p33;
-		} else if(c == '/') {
-			return Scanner::p35;
-		} else {
-			return Scanner::p29;
-		}
-	} else if(current == Scanner::p35) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p17) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p34) {
-		if(c == '*') {
-			return Scanner::p36;
-		} else {
-			return Scanner::p29;
-		}
-	} else if(current == Scanner::p16) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p19) {
-		if(c == '0') {
-			return Scanner::p19;
-		} else if(c == '1') {
-			return Scanner::p19;
-		} else if(c == '5') {
-			return Scanner::p19;
-		} else if(c == '4') {
-			return Scanner::p19;
-		} else if(c == '3') {
-			return Scanner::p19;
-		} else if(c == '2') {
-			return Scanner::p19;
-		} else if(c == '8') {
-			return Scanner::p19;
-		} else if(c == '7') {
-			return Scanner::p19;
-		} else if(c == '6') {
-			return Scanner::p19;
-		} else if(c == '9') {
-			return Scanner::p19;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p36) {
-		if(c == '*') {
-			return Scanner::p33;
-		} else if(c == '/') {
-			return Scanner::p35;
-		} else {
-			return Scanner::p29;
-		}
-	} else if(current == Scanner::p18) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p13) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p12) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p15) {
-		if(c == '*') {
-			return Scanner::p29;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p14) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p0) {
-		if(c == '>') {
-			return Scanner::p20;
-		} else if(c == '5') {
-			return Scanner::p19;
-		} else if(c == '4') {
-			return Scanner::p19;
-		} else if(c == '3') {
-			return Scanner::p19;
-		} else if(c == '2') {
-			return Scanner::p19;
-		} else if(c == '9') {
-			return Scanner::p19;
-		} else if(c == '8') {
-			return Scanner::p19;
-		} else if(c == '7') {
-			return Scanner::p19;
-		} else if(c == '6') {
-			return Scanner::p19;
-		} else if(c == '1') {
-			return Scanner::p19;
-		} else if(c == '+') {
-			return Scanner::p10;
-		} else if(c == '%') {
-			return Scanner::p7;
-		} else if(c == '*') {
-			return Scanner::p11;
-		} else if(c == '(') {
-			return Scanner::p16;
-		} else if(c == '{') {
-			return Scanner::p3;
-		} else if(c == '}') {
-			return Scanner::p5;
-		} else if(c == '[') {
-			return Scanner::p25;
-		} else if(c == ',') {
-			return Scanner::p18;
-		} else if(c == '0') {
-			return Scanner::p17;
-		} else if(c == '|') {
-			return Scanner::p4;
-		} else if(c == '\n' || c == '\t' || c == '\r' || c == ' ') {
-			return Scanner::p2;
-		} else if(c == ']') {
-			return Scanner::p24;
-		} else if(c == '.') {
-			return Scanner::p14;
-		} else if(c == 'L') {
-			return Scanner::p1;
-		} else if(c == 'K') {
-			return Scanner::p1;
-		} else if(c == 'J') {
-			return Scanner::p1;
-		} else if(c == 'I') {
-			return Scanner::p1;
-		} else if(c == 'P') {
-			return Scanner::p1;
-		} else if(c == 'O') {
-			return Scanner::p1;
-		} else if(c == 'N') {
-			return Scanner::p1;
-		} else if(c == 'M') {
-			return Scanner::p1;
-		} else if(c == 'D') {
-			return Scanner::p1;
-		} else if(c == 'C') {
-			return Scanner::p1;
-		} else if(c == 'B') {
-			return Scanner::p1;
-		} else if(c == 'A') {
-			return Scanner::p1;
-		} else if(c == 'H') {
-			return Scanner::p1;
-		} else if(c == 'G') {
-			return Scanner::p1;
-		} else if(c == 'F') {
-			return Scanner::p1;
-		} else if(c == 'E') {
-			return Scanner::p1;
-		} else if(c == 'Y') {
-			return Scanner::p1;
-		} else if(c == 'Z') {
-			return Scanner::p1;
-		} else if(c == 'S') {
-			return Scanner::p1;
-		} else if(c == 'T') {
-			return Scanner::p1;
-		} else if(c == 'Q') {
-			return Scanner::p1;
-		} else if(c == 'R') {
-			return Scanner::p1;
-		} else if(c == 'W') {
-			return Scanner::p1;
-		} else if(c == 'X') {
-			return Scanner::p1;
-		} else if(c == 'U') {
-			return Scanner::p1;
-		} else if(c == 'V') {
-			return Scanner::p1;
-		} else if(c == 'n') {
-			return Scanner::p1;
-		} else if(c == 'm') {
-			return Scanner::p1;
-		} else if(c == 'p') {
-			return Scanner::p1;
-		} else if(c == 'o') {
-			return Scanner::p1;
-		} else if(c == 'j') {
-			return Scanner::p1;
-		} else if(c == 'i') {
-			return Scanner::p1;
-		} else if(c == 'l') {
-			return Scanner::p1;
-		} else if(c == 'k') {
-			return Scanner::p1;
-		} else if(c == 'f') {
-			return Scanner::p1;
-		} else if(c == 'e') {
-			return Scanner::p1;
-		} else if(c == 'h') {
-			return Scanner::p1;
-		} else if(c == 'g') {
-			return Scanner::p1;
-		} else if(c == 'b') {
-			return Scanner::p1;
-		} else if(c == 'a') {
-			return Scanner::p1;
-		} else if(c == 'd') {
-			return Scanner::p1;
-		} else if(c == 'c') {
-			return Scanner::p1;
-		} else if(c == 'y') {
-			return Scanner::p1;
-		} else if(c == 'z') {
-			return Scanner::p1;
-		} else if(c == 'u') {
-			return Scanner::p1;
-		} else if(c == 'v') {
-			return Scanner::p1;
-		} else if(c == 'w') {
-			return Scanner::p1;
-		} else if(c == 'x') {
-			return Scanner::p1;
-		} else if(c == 'q') {
-			return Scanner::p1;
-		} else if(c == 'r') {
-			return Scanner::p1;
-		} else if(c == 's') {
-			return Scanner::p1;
-		} else if(c == 't') {
-			return Scanner::p1;
-		} else if(c == ';') {
-			return Scanner::p23;
-		} else if(c == '/') {
-			return Scanner::p15;
-		} else if(c == '&') {
-			return Scanner::p8;
-		} else if(c == ')') {
-			return Scanner::p12;
-		} else if(c == '<') {
-			return Scanner::p22;
-		} else if(c == '!') {
-			return Scanner::p9;
-		} else if(c == '=') {
-			return Scanner::p21;
-		} else if(c == '-') {
-			return Scanner::p13;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p5) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p8) {
-		if(c == '&') {
-			return Scanner::p27;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p7) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p2) {
-		if(c == '\n' || c == '\t' || c == '\r' || c == ' ') {
-			return Scanner::p2;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p1) {
-		if(c == '1') {
-			return Scanner::p1;
-		} else if(c == '0') {
-			return Scanner::p1;
-		} else if(c == 'A') {
-			return Scanner::p1;
-		} else if(c == '4') {
-			return Scanner::p1;
-		} else if(c == '5') {
-			return Scanner::p1;
-		} else if(c == '2') {
-			return Scanner::p1;
-		} else if(c == '3') {
-			return Scanner::p1;
-		} else if(c == '8') {
-			return Scanner::p1;
-		} else if(c == '9') {
-			return Scanner::p1;
-		} else if(c == '6') {
-			return Scanner::p1;
-		} else if(c == '7') {
-			return Scanner::p1;
-		} else if(c == 'q') {
-			return Scanner::p1;
-		} else if(c == 'p') {
-			return Scanner::p1;
-		} else if(c == 'o') {
-			return Scanner::p1;
-		} else if(c == 'n') {
-			return Scanner::p1;
-		} else if(c == 'm') {
-			return Scanner::p1;
-		} else if(c == 'l') {
-			return Scanner::p1;
-		} else if(c == 'k') {
-			return Scanner::p1;
-		} else if(c == 'j') {
-			return Scanner::p1;
-		} else if(c == 'i') {
-			return Scanner::p1;
-		} else if(c == 'h') {
-			return Scanner::p1;
-		} else if(c == 'g') {
-			return Scanner::p1;
-		} else if(c == 'f') {
-			return Scanner::p1;
-		} else if(c == 'e') {
-			return Scanner::p1;
-		} else if(c == 'd') {
-			return Scanner::p1;
-		} else if(c == 'c') {
-			return Scanner::p1;
-		} else if(c == 'b') {
-			return Scanner::p1;
-		} else if(c == 'z') {
-			return Scanner::p1;
-		} else if(c == 'x') {
-			return Scanner::p1;
-		} else if(c == 'y') {
-			return Scanner::p1;
-		} else if(c == 'v') {
-			return Scanner::p1;
-		} else if(c == 'w') {
-			return Scanner::p1;
-		} else if(c == 't') {
-			return Scanner::p1;
-		} else if(c == 'u') {
-			return Scanner::p1;
-		} else if(c == 'r') {
-			return Scanner::p1;
-		} else if(c == 's') {
-			return Scanner::p1;
-		} else if(c == 'O') {
-			return Scanner::p1;
-		} else if(c == 'N') {
-			return Scanner::p1;
-		} else if(c == 'Q') {
-			return Scanner::p1;
-		} else if(c == 'P') {
-			return Scanner::p1;
-		} else if(c == 'K') {
-			return Scanner::p1;
-		} else if(c == 'J') {
-			return Scanner::p1;
-		} else if(c == 'M') {
-			return Scanner::p1;
-		} else if(c == 'L') {
-			return Scanner::p1;
-		} else if(c == 'G') {
-			return Scanner::p1;
-		} else if(c == 'F') {
-			return Scanner::p1;
-		} else if(c == 'I') {
-			return Scanner::p1;
-		} else if(c == 'H') {
-			return Scanner::p1;
-		} else if(c == 'C') {
-			return Scanner::p1;
-		} else if(c == 'B') {
-			return Scanner::p1;
-		} else if(c == 'E') {
-			return Scanner::p1;
-		} else if(c == 'D') {
-			return Scanner::p1;
-		} else if(c == '_') {
-			return Scanner::p1;
-		} else if(c == 'a') {
-			return Scanner::p1;
-		} else if(c == 'Z') {
-			return Scanner::p1;
-		} else if(c == 'V') {
-			return Scanner::p1;
-		} else if(c == 'W') {
-			return Scanner::p1;
-		} else if(c == 'X') {
-			return Scanner::p1;
-		} else if(c == 'Y') {
-			return Scanner::p1;
-		} else if(c == 'R') {
-			return Scanner::p1;
-		} else if(c == 'S') {
-			return Scanner::p1;
-		} else if(c == 'T') {
-			return Scanner::p1;
-		} else if(c == 'U') {
-			return Scanner::p1;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p4) {
-		if(c == '|') {
-			return Scanner::p26;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p3) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p21) {
-		if(c == '=') {
-			return Scanner::p31;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p9) {
-		if(c == '=') {
-			return Scanner::p28;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p22) {
-		if(c == '=') {
-			return Scanner::p32;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p20) {
-		if(c == '=') {
-			return Scanner::p30;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::p26) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p25) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p24) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p23) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p29) {
-		if(c == '*') {
-			return Scanner::p33;
-		} else if(c == '/') {
-			return Scanner::p34;
-		} else {
-			return Scanner::p29;
-		}
-	} else if(current == Scanner::p28) {
-		return Scanner::ERR;
-	} else if(current == Scanner::p27) {
-		return Scanner::ERR;
-	}
+	switch (current) {
+		case p10:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p11:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p30:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p31:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p32:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p33:	switch (c) {
+					case '/':	return Scanner::p35;
+					case '*':	return Scanner::p33;
+					default:	return Scanner::p29;
+				}; break;
+		case p35:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p17:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p34:	switch (c) {
+					case '*':	return Scanner::p36;
+					default:	return Scanner::p29;
+				}; break;
+		case p16:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p19:	switch (c) {
+					case '0':	return Scanner::p19;
+					case '1':	return Scanner::p19;
+					case '5':	return Scanner::p19;
+					case '4':	return Scanner::p19;
+					case '3':	return Scanner::p19;
+					case '2':	return Scanner::p19;
+					case '9':	return Scanner::p19;
+					case '8':	return Scanner::p19;
+					case '7':	return Scanner::p19;
+					case '6':	return Scanner::p19;
+					default:	return Scanner::ERR;
+				}; break;
+		case p36:	switch (c) {
+					case '/':	return Scanner::p35;
+					case '*':	return Scanner::p33;
+					default:	return Scanner::p29;
+				}; break;
+		case p18:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p12:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p15:	switch (c) {
+					case '*':	return Scanner::p29;
+					default:	return Scanner::ERR;
+				}; break;
+		case p14:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p0:	switch (c) {
+					case 'L':	return Scanner::p1;
+					case 'K':	return Scanner::p1;
+					case 'J':	return Scanner::p1;
+					case 'I':	return Scanner::p1;
+					case 'P':	return Scanner::p1;
+					case 'O':	return Scanner::p1;
+					case 'N':	return Scanner::p1;
+					case 'M':	return Scanner::p1;
+					case 'D':	return Scanner::p1;
+					case 'C':	return Scanner::p1;
+					case 'B':	return Scanner::p1;
+					case 'A':	return Scanner::p1;
+					case 'H':	return Scanner::p1;
+					case 'G':	return Scanner::p1;
+					case 'F':	return Scanner::p1;
+					case 'E':	return Scanner::p1;
+					case 'Y':	return Scanner::p1;
+					case 'Z':	return Scanner::p1;
+					case 'S':	return Scanner::p1;
+					case 'T':	return Scanner::p1;
+					case 'Q':	return Scanner::p1;
+					case 'R':	return Scanner::p1;
+					case 'W':	return Scanner::p1;
+					case 'X':	return Scanner::p1;
+					case 'U':	return Scanner::p1;
+					case 'V':	return Scanner::p1;
+					case 'n':	return Scanner::p1;
+					case 'm':	return Scanner::p1;
+					case 'p':	return Scanner::p1;
+					case 'o':	return Scanner::p1;
+					case 'j':	return Scanner::p1;
+					case 'i':	return Scanner::p1;
+					case 'l':	return Scanner::p1;
+					case 'k':	return Scanner::p1;
+					case 'f':	return Scanner::p1;
+					case 'e':	return Scanner::p1;
+					case 'h':	return Scanner::p1;
+					case 'g':	return Scanner::p1;
+					case 'b':	return Scanner::p1;
+					case 'a':	return Scanner::p1;
+					case 'd':	return Scanner::p1;
+					case 'c':	return Scanner::p1;
+					case 'y':	return Scanner::p1;
+					case 'z':	return Scanner::p1;
+					case 'u':	return Scanner::p1;
+					case 'v':	return Scanner::p1;
+					case 'w':	return Scanner::p1;
+					case 'x':	return Scanner::p1;
+					case 'q':	return Scanner::p1;
+					case 'r':	return Scanner::p1;
+					case 's':	return Scanner::p1;
+					case 't':	return Scanner::p1;
+					case ';':	return Scanner::p23;
+					case '&':	return Scanner::p8;
+					case '!':	return Scanner::p9;
+					case '=':	return Scanner::p21;
+					case '*':	return Scanner::p11;
+					case '5':	return Scanner::p19;
+					case '4':	return Scanner::p19;
+					case '3':	return Scanner::p19;
+					case '2':	return Scanner::p19;
+					case '9':	return Scanner::p19;
+					case '8':	return Scanner::p19;
+					case '7':	return Scanner::p19;
+					case '6':	return Scanner::p19;
+					case '1':	return Scanner::p19;
+					case '%':	return Scanner::p7;
+					case '+':	return Scanner::p10;
+					case '}':	return Scanner::p5;
+					case '-':	return Scanner::p13;
+					case ')':	return Scanner::p12;
+					case '[':	return Scanner::p25;
+					case '.':	return Scanner::p14;
+					case '0':	return Scanner::p17;
+					case '/':	return Scanner::p15;
+					case '|':	return Scanner::p4;
+					case '{':	return Scanner::p3;
+					case '<':	return Scanner::p22;
+					case '>':	return Scanner::p20;
+					case ',':	return Scanner::p18;
+					case ']':	return Scanner::p24;
+					case '(':	return Scanner::p16;
+					case '\n':
+					case '\t':
+					case '\r':
+					case ' ':	return Scanner::p2;
+					default:	return Scanner::ERR;
+				}; break;
+		case p5:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p8:	switch (c) {
+					case '&':	return Scanner::p27;
+					default:	return Scanner::ERR;
+				}; break;
+		case p7:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p2:	switch (c) {
+					case '\n':
+					case '\t':
+					case '\r':
+					case ' ':	return Scanner::p2;
+					default:	return Scanner::ERR;
+				}; break;
+		case p1:	switch (c) {
+					case '1':	return Scanner::p1;
+					case '0':	return Scanner::p1;
+					case 'A':	return Scanner::p1;
+					case '4':	return Scanner::p1;
+					case '5':	return Scanner::p1;
+					case '2':	return Scanner::p1;
+					case '3':	return Scanner::p1;
+					case '8':	return Scanner::p1;
+					case '9':	return Scanner::p1;
+					case '6':	return Scanner::p1;
+					case '7':	return Scanner::p1;
+					case 'q':	return Scanner::p1;
+					case 'p':	return Scanner::p1;
+					case 'o':	return Scanner::p1;
+					case 'n':	return Scanner::p1;
+					case 'm':	return Scanner::p1;
+					case 'l':	return Scanner::p1;
+					case 'k':	return Scanner::p1;
+					case 'j':	return Scanner::p1;
+					case 'i':	return Scanner::p1;
+					case 'h':	return Scanner::p1;
+					case 'g':	return Scanner::p1;
+					case 'f':	return Scanner::p1;
+					case 'e':	return Scanner::p1;
+					case 'd':	return Scanner::p1;
+					case 'c':	return Scanner::p1;
+					case 'b':	return Scanner::p1;
+					case 'z':	return Scanner::p1;
+					case 'x':	return Scanner::p1;
+					case 'y':	return Scanner::p1;
+					case 'v':	return Scanner::p1;
+					case 'w':	return Scanner::p1;
+					case 't':	return Scanner::p1;
+					case 'u':	return Scanner::p1;
+					case 'r':	return Scanner::p1;
+					case 's':	return Scanner::p1;
+					case 'O':	return Scanner::p1;
+					case 'N':	return Scanner::p1;
+					case 'Q':	return Scanner::p1;
+					case 'P':	return Scanner::p1;
+					case 'K':	return Scanner::p1;
+					case 'J':	return Scanner::p1;
+					case 'M':	return Scanner::p1;
+					case 'L':	return Scanner::p1;
+					case 'G':	return Scanner::p1;
+					case 'F':	return Scanner::p1;
+					case 'I':	return Scanner::p1;
+					case 'H':	return Scanner::p1;
+					case 'C':	return Scanner::p1;
+					case 'B':	return Scanner::p1;
+					case 'E':	return Scanner::p1;
+					case 'D':	return Scanner::p1;
+					case '_':	return Scanner::p1;
+					case 'a':	return Scanner::p1;
+					case 'Z':	return Scanner::p1;
+					case 'V':	return Scanner::p1;
+					case 'W':	return Scanner::p1;
+					case 'X':	return Scanner::p1;
+					case 'Y':	return Scanner::p1;
+					case 'R':	return Scanner::p1;
+					case 'S':	return Scanner::p1;
+					case 'T':	return Scanner::p1;
+					case 'U':	return Scanner::p1;
+					default:	return Scanner::ERR;
+				}; break;
+		case p4:	switch (c) {
+					case '|':	return Scanner::p26;
+					default:	return Scanner::ERR;
+				}; break;
+		case p3:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p21:	switch (c) {
+					case '=':	return Scanner::p31;
+					default:	return Scanner::ERR;
+				}; break;
+		case p9:	switch (c) {
+					case '=':	return Scanner::p28;
+					default:	return Scanner::ERR;
+				}; break;
+		case p22:	switch (c) {
+					case '=':	return Scanner::p32;
+					default:	return Scanner::ERR;
+				}; break;
+		case p20:	switch (c) {
+					case '=':	return Scanner::p30;
+					default:	return Scanner::ERR;
+				}; break;
+		case p26:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p25:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p24:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p23:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p29:	switch (c) {
+					case '*':	return Scanner::p33;
+					case '/':	return Scanner::p34;
+					default:	return Scanner::p29;
+				}; break;
+		case p28:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p27:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		case p13:	switch (c) {
+					default:	return Scanner::ERR;
+				}; break;
+		default:	return Scanner::ERR;
+	};
 	return Scanner::ERR;
 }
 
 bool Scanner::isFinal(Scanner::State state) {
-	return state == p10 || state == p11 || state == p30 || state == p31 || state == p32 || state == p35 || state == p17 || state == p16 || state == p19 || state == p18 || state == p13 || state == p12 || state == p15 || state == p14 || state == p5 || state == p7 || state == p2 || state == p1 || state == p3 || state == p21 || state == p9 || state == p22 || state == p20 || state == p26 || state == p25 || state == p24 || state == p23 || state == p28 || state == p27;
+	return state == p10 || state == p11 || state == p30 || state == p31 || state == p32 || state == p35 || state == p17 || state == p16 || state == p19 || state == p18 || state == p12 || state == p15 || state == p14 || state == p5 || state == p7 || state == p2 || state == p1 || state == p3 || state == p21 || state == p9 || state == p22 || state == p20 || state == p26 || state == p25 || state == p24 || state == p23 || state == p28 || state == p27 || state == p13;
 	//return state == Scanner::Q1 || state == Scanner::Q2;
 }
 
