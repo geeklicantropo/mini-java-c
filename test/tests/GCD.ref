@@ -1,0 +1,62 @@
+class
+IDENT GCD
+{
+public
+static
+void
+IDENT main
+(
+IDENT String
+[
+]
+IDENT argv
+)
+{
+int
+IDENT a
+=
+INTEGER_LITERAL 1337
+;
+int
+IDENT b
+=
+INTEGER_LITERAL 666
+;
+while
+(
+IDENT a
+!=
+IDENT b
+)
+{
+if
+(
+IDENT a
+>
+IDENT b
+)
+IDENT a
+=
+IDENT a
+-
+IDENT b
+;
+else
+IDENT b
+=
+IDENT b
+-
+IDENT a
+;
+}
+IDENT System
+.
+IDENT out
+.
+IDENT println
+(
+IDENT a
+)
+;
+}
+}

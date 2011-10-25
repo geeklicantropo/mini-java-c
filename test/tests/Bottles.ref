@@ -1,0 +1,51 @@
+class
+IDENT Bottles
+{
+public
+static
+void
+IDENT main
+(
+IDENT String
+[
+]
+IDENT arg
+)
+{
+int
+IDENT i
+=
+INTEGER_LITERAL 99
+;
+while
+(
+IDENT i
+>
+INTEGER_LITERAL 0
+)
+{
+IDENT System
+.
+IDENT out
+.
+IDENT println
+(
+-
+IDENT i
+*
+-
+INTEGER_LITERAL 1
+)
+;
+IDENT i
+=
+IDENT i
++
+(
+-
+INTEGER_LITERAL 1
+)
+;
+}
+}
+}
