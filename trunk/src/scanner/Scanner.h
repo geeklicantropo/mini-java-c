@@ -12,6 +12,7 @@
 #include <fstream>
 #include "Token.h"
 
+
 class Scanner {
 public:
 
@@ -19,13 +20,6 @@ public:
 	virtual ~Scanner();
 	Token* nextToken();
 private:
-	/*enum State {
-			ERR,
-			START,
-			Q1,
-			Q2,
-	};*/
-
 	enum State {
 		p10,
 		p11,

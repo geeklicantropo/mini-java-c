@@ -40,6 +40,7 @@ Token* Scanner::nextToken() {
 
 	while(foundToken == NULL) {
 		int c = fInput->get(); //read next input char
+
 		if(c == -1) { //eof reached
 			//special handling, since once the stream reaches EOF
 			//seekg does not work anymore :(
@@ -47,7 +48,7 @@ Token* Scanner::nextToken() {
 		} else {
 			current = transition(current, c);
 
-            ////
+            ////TODO (MB): find out what that is for :)
             if(c=='\n') {
                 lineCounter++;
                 while(newlineStack.size()>0){
@@ -67,7 +68,8 @@ Token* Scanner::nextToken() {
 
 			if(current == Scanner::ERR) {
 				if(lastFinal == Scanner::ERR) {
-					throw "Scanner error"; //we did not find a final state
+					throw "unknown symbol in input";
+					//throw "Scanner error"; //we did not find a final state
 				}
 
 				char* text = extractText(fInput, startPos, lastFinalPos);
@@ -148,42 +150,9 @@ Token* Scanner::makeToken(Scanner::State state, char* text, unsigned int line) {
 	default: return TokenFactory::getError();
 	};
 	return TokenFactory::getError();
-
-	//TEST
-	/*cout << "text=" << text << endl;
-	if(state == Scanner::Q1) {
-		cout << "keyword a found" << endl;
-	} else if(state == Scanner::Q2) {
-		cout << "ident aa* found" << endl;
-	} else {
-		cout << "error";
-	}*/
-
-	//never return NULL, or scanner while loop forever
-	//TODO make token for each final state (using the factory)
-	//return TokenFactory::getLParen(); //just for test
 }
 
 Scanner::State Scanner::transition(Scanner::State current, char c) {
-	/*if(current == Scanner::START) {
-		if(c == 'a') {
-			return Scanner::Q1;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::Q1) {
-		if(c == 'a') {
-			return Scanner::Q2;
-		} else {
-			return Scanner::ERR;
-		}
-	} else if(current == Scanner::Q2) {
-		if(c == 'a') {
-			return Scanner::Q2;
-		} else {
-			return Scanner::ERR;
-		}
-	}*/
 	switch (current) {
 		case p10:	switch (c) {
 					default:	return Scanner::ERR;
@@ -477,10 +446,8 @@ Scanner::State Scanner::transition(Scanner::State current, char c) {
 
 bool Scanner::isFinal(Scanner::State state) {
 	return state == p10 || state == p11 || state == p30 || state == p31 || state == p32 || state == p35 || state == p17 || state == p16 || state == p19 || state == p18 || state == p12 || state == p15 || state == p14 || state == p5 || state == p7 || state == p2 || state == p1 || state == p3 || state == p21 || state == p9 || state == p22 || state == p20 || state == p26 || state == p25 || state == p24 || state == p23 || state == p28 || state == p27 || state == p13;
-	//return state == Scanner::Q1 || state == Scanner::Q2;
 }
 
 Scanner::State Scanner::getStartState() {
 	return Scanner::p0;
-	//return Scanner::START;
 }

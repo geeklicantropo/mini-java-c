@@ -118,9 +118,8 @@ Token* Screener::nextToken() {
 	// filter tokens we don't like (comments, whitespace)
 	if(token->getTag() == Token::T_COMMENT || token->getTag() == Token::T_WHITESPACE)
 		return nextToken();
-	if(token->getTag() == Token::T_ERROR) {
-		std::cout << "Error token!" << std::endl;
-		return token;
+	if(token->getTag() == Token::T_ERROR) { //should never happen
+		throw "Error token!";
 	}
 
 	// convert identifiers that are keywords to keyword tokens
