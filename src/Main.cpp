@@ -3,6 +3,7 @@
 //============================================================================
 
 #include <iostream>
+#include <stdlib.h>
 
 #include "scanner/Scanner.h"
 #include "scanner/Screener.h"
@@ -40,6 +41,7 @@ int main(int argc, const char* argv[]) {
 			Token* token;
 			for (token = screener->nextToken(); token->getTag() != Token::T_EOF; token = screener->nextToken()) {
 				//Output Tokens
+
 				if(token->getTag() == Token::T_ERROR) {
 					return -1;
 				} else  if(token->getTag() == Token::T_COMMENT || token->getTag() == Token::T_WHITESPACE) {
