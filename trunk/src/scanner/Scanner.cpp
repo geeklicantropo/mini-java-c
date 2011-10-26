@@ -18,6 +18,7 @@ using namespace std;
 
 Scanner::Scanner(string file) : fFile(file) {
 	this->fInput = new ifstream(this->fFile.c_str(), ifstream::in);
+	this->fEOF = false;
 }
 
 Scanner::~Scanner() {
