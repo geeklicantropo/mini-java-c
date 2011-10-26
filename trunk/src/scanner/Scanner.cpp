@@ -18,7 +18,6 @@ using namespace std;
 
 Scanner::Scanner(string file) : fFile(file) {
 	this->fInput = new ifstream(this->fFile.c_str(), ifstream::in);
-	this->fEOF = false;
 
 	this->fInput->seekg(0, ios::end);
 	this->fLastPos = this->fInput->tellg();

@@ -62,7 +62,6 @@ private:
 
 	std::string fFile;
 	std::ifstream* fInput;
-	bool fEOF;
 	std::streampos fLastPos;
 
 	//Token* handleEOF(Scanner::State, std::streampos, std::streampos, unsigned int line);
