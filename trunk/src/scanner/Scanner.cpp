@@ -19,6 +19,10 @@ using namespace std;
 Scanner::Scanner(string file) : fFile(file) {
 	this->fInput = new ifstream(this->fFile.c_str(), ifstream::in);
 	this->fEOF = false;
+
+	this->fInput->seekg(0, ios::end);
+	this->fLastPos = this->fInput->tellg();
+	this->fInput->seekg(0, ios::beg);
 }
 
 Scanner::~Scanner() {
@@ -26,7 +30,11 @@ Scanner::~Scanner() {
 }
 
 Token* Scanner::nextToken() {
-	if(fEOF) { //once we reach EOF once, the nextToken function will always return EOF
+	//The last time we retrieved a token, we stopped
+	//at the last char in the stream (we have seen
+	//the complete input)
+	if(fInput->tellg() == this->fLastPos) {
+		//always return EOF
 		return TokenFactory::getEOF();
 	}
 
@@ -42,48 +50,50 @@ Token* Scanner::nextToken() {
 	while(foundToken == NULL) {
 		int c = fInput->get(); //read next input char
 
-		if(c == -1) { //eof reached
-			//special handling, since once the stream reaches EOF
-			//seekg does not work anymore :(
-			foundToken = handleEOF(lastFinal, startPos, lastFinalPos, lineCounter);
+		if(c == -1) {
+			//clear eof bit, so that tellg() works on the
+			//next call of nextToken
+			fInput->clear();
+			//if the last state is not final, there is some "open" input
+			//in the file, which will never be accepted
+			if(!isFinal(current)) {
+				throw "premature end of file";
+			}
+			current = Scanner::ERR; //if we hit EOF, we know that the automaton can't handle it
 		} else {
 			current = transition(current, c);
-
-            ////TODO (MB): find out what that is for :)
-            if(c=='\n') {
-                lineCounter++;
-                while(newlineStack.size()>0){
-                    if(newlineStack.back() < ((int) startPos)-1)
-                    {
-                        lineCounter--;
-                        newlineStack.pop_back();
-                    } else {
-                        lineCounter++;
-                        break;
-                    }
-                }
-                newlineStack.push_back(startPos);
-            }
-
-            ////
-
-			if(current == Scanner::ERR) {
-				if(lastFinal == Scanner::ERR) {
-					throw "unknown symbol in input";
-					//throw "Scanner error"; //we did not find a final state
-				}
-
-				char* text = extractText(fInput, startPos, lastFinalPos);
-				foundToken = makeToken(lastFinal, text, lineCounter);
-				//restore last final pos position in stream, scanning
-				//starts from here when nextToken is called again
-				fInput->seekg(lastFinalPos);
-			}
-			if(isFinal(current)) {
-				lastFinal = current;
-				lastFinalPos = fInput->tellg();
-			}
 		}
+
+		if(current == Scanner::ERR) {
+			if(lastFinal == Scanner::ERR) {
+				throw "unknown symbol in input";
+			}
+
+			char* text = extractText(fInput, startPos, lastFinalPos);
+			foundToken = makeToken(lastFinal, text, lineCounter);
+			//restore last final pos position in stream, scanning
+			//starts from here when nextToken is called again
+			fInput->seekg(lastFinalPos);
+		}
+		if(isFinal(current)) {
+			lastFinal = current;
+			lastFinalPos = fInput->tellg();
+		}
+
+//		if(c=='\n') {
+//			lineCounter++;
+//			while(newlineStack.size()>0){
+//				if(newlineStack.back() < ((int) startPos)-1)
+//				{
+//					lineCounter--;
+//					newlineStack.pop_back();
+//				} else {
+//					lineCounter++;
+//					break;
+//				}
+//			}
+//			newlineStack.push_back(startPos);
+//		}
 	}
 	//invariant: foundToken != NULL
 	return foundToken;
@@ -98,22 +108,22 @@ char* Scanner::extractText(ifstream* stream, streampos start, streampos end) {
 	return text;
 }
 
-Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, streampos lastFinal, unsigned int lineCounter) {
-	fEOF = true;
-	ifstream stream(this->fFile.c_str(), ifstream::in);
-	streamsize length;
-	stream.seekg (0, ios::end);
-	length = stream.tellg();
-
-	if(startPos == length) { //last time nextToken was called we were at the end of the file
-		return TokenFactory::getEOF(); //we are now at eof
-	} else if(lastFinal == length) { //we reached a final state with the last char in input
-		char* text = extractText(&stream, startPos, lastFinal);
-		return makeToken(lastFinalState, text, lineCounter); //return appropriate token
- 	} else { //there was input in the file, but we did not reach a final state
- 		throw "Scanner error: premature end of file"; //this is an error
- 	}
-}
+//Token* Scanner::handleEOF(Scanner::State lastFinalState, streampos startPos, streampos lastFinal, unsigned int lineCounter) {
+//	fEOF = true;
+//	ifstream stream(this->fFile.c_str(), ifstream::in);
+//	streamsize length;
+//	stream.seekg (0, ios::end);
+//	length = stream.tellg();
+//
+//	if(startPos == length) { //last time nextToken was called we were at the end of the file
+//		return TokenFactory::getEOF(); //we are now at eof
+//	} else if(lastFinal == length) { //we reached a final state with the last char in input
+//		char* text = extractText(&stream, startPos, lastFinal);
+//		return makeToken(lastFinalState, text, lineCounter); //return appropriate token
+// 	} else { //there was input in the file, but we did not reach a final state
+// 		throw "Scanner error: premature end of file"; //this is an error
+// 	}
+//}
 
 Token* Scanner::makeToken(Scanner::State state, char* text, unsigned int line) {
 	assert(isFinal(state));
@@ -446,7 +456,16 @@ Scanner::State Scanner::transition(Scanner::State current, char c) {
 }
 
 bool Scanner::isFinal(Scanner::State state) {
-	return state == p10 || state == p11 || state == p30 || state == p31 || state == p32 || state == p35 || state == p17 || state == p16 || state == p19 || state == p18 || state == p12 || state == p15 || state == p14 || state == p5 || state == p7 || state == p2 || state == p1 || state == p3 || state == p21 || state == p9 || state == p22 || state == p20 || state == p26 || state == p25 || state == p24 || state == p23 || state == p28 || state == p27 || state == p13;
+	return state == p10 || state == p11 || state == p30 ||
+		   state == p31 || state == p32 || state == p35 ||
+		   state == p17 || state == p16 || state == p19 ||
+		   state == p18 || state == p12 || state == p15 ||
+		   state == p14 || state == p5 || state == p7 ||
+		   state == p2 || state == p1 || state == p3 ||
+		   state == p21 || state == p9 || state == p22 ||
+		   state == p20 || state == p26 || state == p25 ||
+		   state == p24 || state == p23 || state == p28 ||
+		   state == p27 || state == p13;
 }
 
 Scanner::State Scanner::getStartState() {
