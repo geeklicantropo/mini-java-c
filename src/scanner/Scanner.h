@@ -57,14 +57,15 @@ private:
 		p28,
 		p27,
 		p13,
-		ERR
+		ERR,
 	};
 
 	std::string fFile;
 	std::ifstream* fInput;
 	bool fEOF;
+	std::streampos fLastPos;
 
-	Token* handleEOF(Scanner::State, std::streampos, std::streampos, unsigned int line);
+	//Token* handleEOF(Scanner::State, std::streampos, std::streampos, unsigned int line);
 	char* extractText(std::ifstream* stream, std::streampos start, std::streampos end);
 
 	Scanner::State getStartState();
